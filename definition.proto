@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package double_echo;
+
+service Server {
+    // Request.content * 2 => Reply.content
+    rpc RemoteFunction(Request) returns (Reply) {}
+}
+
+message Request {
+    string content = 1;
+}
+
+message Reply {
+    string content = 1;
+}
