@@ -1,7 +1,16 @@
 # gRPC-DoubleEcho
 gRPC implementation of service that echo twice its input to output
 
-> make proto python using the following command:
+> run server
 ```shell
- > python -m grpc_tools.protoc definition.proto --python_out=. --grpc_python_out=. -I.
+> ./server.py [PORT] &
+```
+
+> run client
+```shell
+> ./client.py [MSG_TEXT [HOST [PORT]]]
+
+> generate python from proto using:
+```shell
+> ./gen_python_from_proto.sh
 ```
