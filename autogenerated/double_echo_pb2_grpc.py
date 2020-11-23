@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import definition_pb2 as definition__pb2
+import double_echo_pb2 as double__echo__pb2
 
 
 class ServerStub(object):
@@ -15,9 +15,9 @@ class ServerStub(object):
             channel: A grpc.Channel.
         """
         self.RemoteFunction = channel.unary_unary(
-                '/double_echo.Server/RemoteFunction',
-                request_serializer=definition__pb2.Request.SerializeToString,
-                response_deserializer=definition__pb2.Reply.FromString,
+                '/doubleecho.Server/RemoteFunction',
+                request_serializer=double__echo__pb2.Msg.SerializeToString,
+                response_deserializer=double__echo__pb2.Msg.FromString,
                 )
 
 
@@ -36,12 +36,12 @@ def add_ServerServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'RemoteFunction': grpc.unary_unary_rpc_method_handler(
                     servicer.RemoteFunction,
-                    request_deserializer=definition__pb2.Request.FromString,
-                    response_serializer=definition__pb2.Reply.SerializeToString,
+                    request_deserializer=double__echo__pb2.Msg.FromString,
+                    response_serializer=double__echo__pb2.Msg.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'double_echo.Server', rpc_method_handlers)
+            'doubleecho.Server', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -60,8 +60,8 @@ class Server(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/double_echo.Server/RemoteFunction',
-            definition__pb2.Request.SerializeToString,
-            definition__pb2.Reply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/doubleecho.Server/RemoteFunction',
+            double__echo__pb2.Msg.SerializeToString,
+            double__echo__pb2.Msg.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
